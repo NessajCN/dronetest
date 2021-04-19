@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
     # 指定路由器SSID和密码
     # Run 00_set_sta.py
-    tl_drone.config_sta(ssid="TJNAV_15", password="robot123")
+    tl_drone.config_sta(ssid="robomasterTT", password="tj66157001")
     print("Switch to STA mode")
     print("Then wait until the motor start spinning")
     print("which indicates that your drone has been successfully connected to your Wifi.")
