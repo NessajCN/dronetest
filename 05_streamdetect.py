@@ -37,7 +37,7 @@ def streamRecognition(sourceImage):
     set_logging()
     weights = 'yolov3-tiny.pt'
     device = 'cpu'
-    imgsz = '640'
+    imgsz = 640
 
     # Load model
     model = attempt_load(weights, map_location=device)  # load FP32 model
@@ -52,12 +52,12 @@ def streamRecognition(sourceImage):
 
     # Set Dataloader
     vid_path, vid_writer = None, None
-    if webcam:
-        view_img = check_imshow()
-        cudnn.benchmark = True  # set True to speed up constant image size inference
-        dataset = LoadStreams(source, img_size=imgsz, stride=stride)
-    else:
-        dataset = LoadImages(source, img_size=imgsz, stride=stride)
+    # if webcam:
+    #     view_img = check_imshow()
+    #     cudnn.benchmark = True  # set True to speed up constant image size inference
+    #     dataset = LoadStreams(source, img_size=imgsz, stride=stride)
+    # else:
+    dataset = LoadImages(source, img_size=imgsz, stride=stride)
 
     # Get names and colors
     names = model.module.names if hasattr(model, 'module') else model.names
@@ -122,8 +122,11 @@ def streamRecognition(sourceImage):
             # Print time (inference + NMS)
             # print(f'{s}Done. ({t2 - t1:.3f}s)')
 
-    # Return the image
-    return im0
+            # Stream results
+            if view_img:
+                cv2.imshow(str(p), im0)
+                cv2.waitKey(1)  # 1 millisecond
+
 
 if __name__ == '__main__':
     robomaster.config.LOCAL_IP_STR = "192.168.31.44"
@@ -139,9 +142,10 @@ if __name__ == '__main__':
     for i in range(0, 302):
         img = tl_camera.read_cv2_image()
         # process the image frames
-        markedImgage = streamRecognition(img)
-        cv2.imshow("Drone", markedImage)
-        cv2.waitKey(1)
+        streamRecognition(img)
+        # cv2.imshow("Drone", markedImage)
+        # cv2.waitKey(1)
+
     cv2.destroyAllWindows()
     tl_camera.stop_video_stream()
 
