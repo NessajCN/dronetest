@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import robomaster
 from robomaster import robot
 import argparse
 import time
@@ -32,10 +33,11 @@ from utils.torch_utils import select_device, load_classifier, time_synchronized
 
 def streamRecognition(sourceImage):
     # Initialize
-    source = self.sourceImage
+    source = sourceImage
     set_logging()
-    weights = 'yolo3-tiny.pt'
+    weights = 'yolov3-tiny.pt'
     device = 'cpu'
+    imgsz = '640'
 
     # Load model
     model = attempt_load(weights, map_location=device)  # load FP32 model
@@ -124,7 +126,7 @@ def streamRecognition(sourceImage):
     return im0
 
 if __name__ == '__main__':
-    robomaster.config.LOCAL_IP_STR = "192.168.31.172"
+    robomaster.config.LOCAL_IP_STR = "192.168.31.44"
     tl_drone = robot.Drone()
     tl_drone.initialize(conn_type="sta")
 
