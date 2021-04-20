@@ -38,6 +38,9 @@ def streamRecognition(sourceImage):
     weights = 'yolov3-tiny.pt'
     device = 'cpu'
     imgsz = 640
+    webcam = source.isnumeric() or source.endswith('.txt') or source.lower().startswith(
+        ('rtsp://', 'rtmp://', 'http://', 'https://'))
+
 
     # Load model
     model = attempt_load(weights, map_location=device)  # load FP32 model
@@ -52,12 +55,12 @@ def streamRecognition(sourceImage):
 
     # Set Dataloader
     vid_path, vid_writer = None, None
-    # if webcam:
-    #     view_img = check_imshow()
-    #     cudnn.benchmark = True  # set True to speed up constant image size inference
-    #     dataset = LoadStreams(source, img_size=imgsz, stride=stride)
-    # else:
-    dataset = LoadImages(source, img_size=imgsz, stride=stride)
+    if webcam:
+        view_img = check_imshow()
+        cudnn.benchmark = True  # set True to speed up constant image size inference
+        dataset = LoadStreams(source, img_size=imgsz, stride=stride)
+    else:
+        dataset = LoadImages(source, img_size=imgsz, stride=stride)
 
     # Get names and colors
     names = model.module.names if hasattr(model, 'module') else model.names
@@ -123,9 +126,9 @@ def streamRecognition(sourceImage):
             # print(f'{s}Done. ({t2 - t1:.3f}s)')
 
             # Stream results
-            if view_img:
-                cv2.imshow(str(p), im0)
-                cv2.waitKey(1)  # 1 millisecond
+            # if view_img:
+            #     cv2.imshow(str(p), im0)
+            #     cv2.waitKey(1)  # 1 millisecond
 
 
 if __name__ == '__main__':
@@ -142,9 +145,9 @@ if __name__ == '__main__':
     for i in range(0, 302):
         img = tl_camera.read_cv2_image()
         # process the image frames
-        streamRecognition(img)
-        # cv2.imshow("Drone", markedImage)
-        # cv2.waitKey(1)
+        markedImage = streamRecognition(img)
+        cv2.imshow("Drone", markedImage)
+        cv2.waitKey(1)
 
     cv2.destroyAllWindows()
     tl_camera.stop_video_stream()
