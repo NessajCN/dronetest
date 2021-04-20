@@ -20,7 +20,7 @@ import time
 
 
 if __name__ == '__main__':
-    robomaster.config.LOCAL_IP_STR = "192.168.31.44"
+    robomaster.config.LOCAL_IP_STR = "192.168.31.172"
     tl_drone = robot.Drone()
     tl_drone.initialize(conn_type="sta")
 
