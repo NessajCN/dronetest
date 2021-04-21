@@ -117,7 +117,7 @@ def streamRecognition(sourceImage):
                 cv2.waitKey(1)  # 1 millisecond
 
 if __name__ == '__main__':
-    robomaster.config.LOCAL_IP_STR = "192.168.31.44"
+    robomaster.config.LOCAL_IP_STR = "192.168.31.172"
     tl_drone = robot.Drone()
     tl_drone.initialize(conn_type="sta")
 
@@ -127,10 +127,10 @@ if __name__ == '__main__':
     tl_camera.set_fps("high")
     tl_camera.set_resolution("high")
     tl_camera.set_bitrate(6)
+    videoSource = tl_drone.video_stream_addr
     for i in range(0, 302):
         # process the image frames
-        videoSource = tl_camera.video_stream_addr
-        streamRecognition()
+        streamRecognition(videoSource)
         # cv2.imshow("Drone", markedImage)
         # cv2.waitKey(1)
 
