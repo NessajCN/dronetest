@@ -1,5 +1,5 @@
-import src.robomaster
-from src.robomaster import robot
+import robomaster
+from robomaster import robot
 
 if __name__ == '__main__':
 

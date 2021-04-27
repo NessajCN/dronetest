@@ -35,7 +35,7 @@ class Config:
     _sdk_addr = None
     _video_stream_addr = None
     _video_stream_port = None
-    _video_stream_proto = "tcp"
+    _video_stream_proto = "udp"
     _audio_stream_addr = None
     _audio_stream_port = None
 

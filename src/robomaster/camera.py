@@ -100,6 +100,13 @@ class TelloCamera(Camera):
                                                  addr=vs_addr,
                                                  ip_proto=vs_proto)
 
+    @property
+    def video_stream_addr(self):
+        """ 机器人视频流地址
+
+        :return: tuple:(ip, port)：机器人视频流地址 """
+        return self._robot.ip, self.conf.video_stream_port
+
     def stop_video_stream(self):
         flag = self._liveview.stop_video_stream()
         self._video_stream(0)

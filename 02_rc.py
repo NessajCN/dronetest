@@ -11,7 +11,7 @@ import sys
 tello_address = ('192.168.31.143', 8889)
 
 # 本地电脑的IP和接口
-local_address = ('192.168.31.44', 8890)
+local_address = ('192.168.31.172', 8890)
 
 # 创建一个接收用户指令的UDP连接
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

@@ -33,7 +33,7 @@ from utils.torch_utils import select_device, load_classifier, time_synchronized
 
 def streamRecognition(sourceImage):
     # Initialize
-    source = sourceImage
+    source = self._liveview
     set_logging()
     weights = 'yolov3-tiny.pt'
     device = 'cpu'
@@ -45,8 +45,8 @@ def streamRecognition(sourceImage):
     model = attempt_load(weights, map_location=device)  # load FP32 model
     stride = int(model.stride.max())  # model stride
     imgsz = check_img_size(imgsz, s=stride)  # check img_size
-    if half:
-        model.half()  # to FP16
+    # if half:
+    #     model.half()  # to FP16
 
     # Second-stage classifier
     classify = False
@@ -117,9 +117,9 @@ def streamRecognition(sourceImage):
                 cv2.waitKey(1)  # 1 millisecond
 
 if __name__ == '__main__':
-    robomaster.config.LOCAL_IP_STR = "192.168.31.172"
+    robomaster.config.LOCAL_IP_STR = "192.168.10.2"
     tl_drone = robot.Drone()
-    tl_drone.initialize(conn_type="sta")
+    tl_drone.initialize(conn_type="ap")
 
     tl_camera = tl_drone.camera
     # 显示302帧图传
@@ -127,14 +127,14 @@ if __name__ == '__main__':
     tl_camera.set_fps("high")
     tl_camera.set_resolution("high")
     tl_camera.set_bitrate(6)
-    videoSource = tl_drone.video_stream_addr
+    streamRecognition(videoSource)
     for i in range(0, 302):
         # process the image frames
         streamRecognition(videoSource)
         # cv2.imshow("Drone", markedImage)
         # cv2.waitKey(1)
 
-    cv2.destroyAllWindows()
-    tl_camera.stop_video_stream()
+    # cv2.destroyAllWindows()
+    # tl_camera.stop_video_stream()
 
     tl_drone.close()

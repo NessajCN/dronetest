@@ -87,15 +87,15 @@ def streamRecognition(sourceImage):
 
     # Inference
     t1 = time_synchronized()
-    pred = model(img, augment=opt.augment)[0]
+    pred = model(img, augment=0)[0]
 
     # Apply NMS
     # pred = non_max_suppression(pred, 0.25, 0.45, classes=opt.classes, agnostic=opt.agnostic_nms)
     t2 = time_synchronized()
 
-    Apply Classifier
-    if classify:
-        pred = apply_classifier(pred, modelc, img, im0s)
+    # Apply Classifier
+    # if classify:
+    #     pred = apply_classifier(pred, modelc, img, im0s)
 
     # Process detections
     for i, det in enumerate(pred):  # detections per image
@@ -142,9 +142,9 @@ def streamRecognition(sourceImage):
     return im0
 
 if __name__ == '__main__':
-    robomaster.config.LOCAL_IP_STR = "192.168.31.44"
+    robomaster.config.LOCAL_IP_STR = "192.168.10.2"
     tl_drone = robot.Drone()
-    tl_drone.initialize(conn_type="sta")
+    tl_drone.initialize(conn_type="ap")
 
     tl_camera = tl_drone.camera
     # 显示302帧图传
